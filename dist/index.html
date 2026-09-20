@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI 감정 일기 - 오늘의 하루는 어땠나요?</title>
+  <meta name="description" content="AI가 당신의 마음을 읽고 전하는 따뜻한 공감과 위로의 일기장" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <script type="module" crossorigin src="/assets/index-DGDP0MTg.js"></script>
+  <link rel="stylesheet" crossorigin href="/assets/index-C9FdkxL1.css">
+</head>
+
+<body>
+  <!-- Ambient background elements -->
+  <div class="bg-shape shape-1"></div>
+  <div class="bg-shape shape-2"></div>
+  <div class="bg-shape shape-3"></div>
+
+  <div class="app-container">
+    <!-- Header -->
+    <header class="app-header">
+      <div class="header-badge">
+        <i class="fa-solid fa-heart-pulse"></i> AI 마음 케어
+      </div>
+      <!-- ① '오늘의 하루는 어땠나요?'라는 제목 -->
+      <h1 class="main-title">오늘의 하루는 어땠나요?</h1>
+      <p class="subtitle" id="current-date">따뜻한 AI가 당신의 마음에 귀 기울이고 있어요.</p>
+    </header>
+
+    <!-- Main Card -->
+    <main class="main-card">
+      <!-- Quick emotion suggestion chips -->
+      <div class="preset-section">
+        <span class="preset-label"><i class="fa-solid fa-wand-magic-sparkles"></i> 이런 이야기를 적어보세요</span>
+        <div class="preset-chips">
+          <button class="chip-btn" data-text="오늘 회사에서 과장이 말을 심하게 해서 종일 스트레스를 받았어. 퇴근하고 힘이 다 빠져서 우울하다.">
+            😔 직장/학업 스트레스
+          </button>
+          <button class="chip-btn" data-text="오늘 정말 원하던 프로젝트 합격 소식을 들었어! 오랫동안 준비했는데 너무 기쁘고 뿌듯하다!">
+            🎉 기쁜 성취와 행복
+          </button>
+          <button class="chip-btn" data-text="이유 없이 마음이 조급하고 불안해. 앞으로의 미래가 걱정되고 아무것도 손에 안 잡혀.">
+            😰 답답함과 불안
+          </button>
+          <button class="chip-btn" data-text="저녁에 친구랑 맛있는 음식을 먹으면서 오랫동안 수다를 떨었어. 소소하지만 평화로운 하루였어.">
+            ☕ 소소한 일상과 평온
+          </button>
+        </div>
+      </div>
+
+      <!-- Input Area Container -->
+      <div class="input-wrapper">
+        <div class="input-header-bar">
+          <span class="input-label"><i class="fa-regular fa-pen-to-square"></i> 감정 일기 작성하기</span>
+          <div class="input-actions">
+            <button id="btn-clear" class="text-action-btn" title="내용 지우기">
+              <i class="fa-solid fa-rotate-left"></i> 지우기
+            </button>
+          </div>
+        </div>
+
+        <!-- ② 사용자가 여러 줄의 텍스트를 입력할 수 있는 넓은 입력창(textarea) -->
+        <textarea id="diary-input" rows="7"
+          placeholder="오늘 있었던 일, 느꼈던 감정, 누구에게도 하지 못했던 이야기를 편하게 적어보세요... (예: 오늘 있었던 일이나 든 생각을 자유롭게 적어보세요)"></textarea>
+
+        <div class="input-footer-bar">
+          <!-- Live character counter -->
+          <span class="char-counter" id="char-counter">0 / 1,000자</span>
+
+          <!-- Voice recording animation indicator -->
+          <div id="voice-indicator" class="voice-indicator hidden">
+            <span class="pulse-ring"></span>
+            <span class="listening-text"><i class="fa-solid fa-microphone"></i> 음성을 듣고 있습니다...</span>
+            <div class="waveform">
+              <span class="bar"></span>
+              <span class="bar"></span>
+              <span class="bar"></span>
+              <span class="bar"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ③ 입력창 아래 '음성으로 입력하기' 버튼과 '분석 요청하기' 버튼 -->
+      <div class="button-group">
+        <button id="btn-voice" class="btn btn-secondary">
+          <i class="fa-solid fa-microphone"></i>
+          <span>음성으로 입력하기</span>
+        </button>
+
+        <button id="btn-analyze" class="btn btn-primary">
+          <i class="fa-solid fa-sparkles"></i>
+          <span>분석 요청하기</span>
+        </button>
+      </div>
+
+      <!-- History toggle & quick utilities bar -->
+      <div class="utility-bar">
+        <button id="btn-history-toggle" class="utility-btn">
+          <i class="fa-solid fa-clock-rotate-left"></i> 저장된 일기 목록 보기 (<span id="history-count">0</span>)
+        </button>
+      </div>
+
+      <!-- History List Container (Collapsible) -->
+      <div id="history-section" class="history-section hidden">
+        <h3 class="history-title"><i class="fa-solid fa-bookmark"></i> 지나간 마음 일기</h3>
+        <div id="history-list" class="history-list">
+          <!-- Dynamic history items insert here -->
+        </div>
+      </div>
+    </main>
+
+    <!-- Output Section -->
+    <!-- ④ 가장 아래에는 'AI의 답변'이라는 소제목과 함께, AI의 답변이 표시될 회색 배경의 박스 -->
+    <section class="response-section">
+      <div class="response-header">
+        <h2 class="response-title">
+          <i class="fa-solid fa-robot"></i> AI의 답변
+        </h2>
+        <div class="response-controls" id="response-controls" style="display: none;">
+          <button id="btn-tts" class="control-btn" title="음성으로 듣기">
+            <i class="fa-solid fa-volume-high"></i> 음성 듣기
+          </button>
+          <button id="btn-copy" class="control-btn" title="답변 복사하기">
+            <i class="fa-regular fa-copy"></i> 복사
+          </button>
+        </div>
+      </div>
+
+      <!-- 회색 배경의 박스 (Gray Background Box) -->
+      <div id="ai-response-box" class="gray-response-box">
+        <div id="response-placeholder" class="placeholder-content">
+          <i class="fa-regular fa-comment-dots placeholder-icon"></i>
+          <p class="placeholder-text">여기에 AI의 답변이 표시됩니다.</p>
+        </div>
+
+        <div id="response-loading" class="loading-content hidden">
+          <div class="sparkle-spinner">
+            <i class="fa-solid fa-brain"></i>
+          </div>
+          <p class="loading-text">AI가 당신의 감정을 들여다보고 공감과 조언을 작성하고 있어요...</p>
+        </div>
+
+        <div id="response-result" class="result-content hidden">
+          <!-- Dynamic emotion tags -->
+          <div class="emotion-tags" id="emotion-tags"></div>
+
+          <!-- Main answer text -->
+          <div class="ai-text-content" id="ai-text-content"></div>
+
+          <!-- Encouragement Quote & Action Card -->
+          <div class="advice-card" id="advice-card">
+            <div class="advice-title"><i class="fa-solid fa-lightbulb"></i> 오늘 마음 처방전</div>
+            <div class="advice-body" id="advice-body"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="app-footer">
+      <p>© 2026 AI 감정 일기 • 당신의 모든 날을 응원합니다 💙</p>
+    </footer>
+  </div>
+
+  <!-- Audio element for TTS or sound effects -->
+</body>
+
+</html>
