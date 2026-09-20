@@ -1,0 +1,543 @@
+/* ==========================================================================
+   MBTI Test App - Stylesheet (Start, Question, Result)
+   ========================================================================== */
+
+/* 1. Global Reset & Variables */
+:root {
+    --primary-gradient: linear-gradient(135deg, #6366f1 0%, #a855f7 50%, #ec4899 100%);
+    --primary-hover-gradient: linear-gradient(135deg, #4f46e5 0%, #9333ea 50%, #db2777 100%);
+    --option-gradient: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+    --option-hover-gradient: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+    --option-active-border: #818cf8;
+    --bg-dark: #0f172a;
+    --card-bg: rgba(255, 255, 255, 0.92);
+    --card-border: rgba(255, 255, 255, 0.8);
+    --text-primary: #1e293b;
+    --text-secondary: #64748b;
+    --text-accent: #6366f1;
+    --shadow-soft: 0 25px 50px -12px rgba(99, 102, 241, 0.15), 0 0 30px rgba(168, 85, 247, 0.1);
+    --radius-xl: 28px;
+    --radius-lg: 18px;
+    --radius-full: 9999px;
+    --font-main: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-heading: 'Outfit', 'Noto Sans KR', sans-serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-main);
+    background-color: #f8fafc;
+    color: var(--text-primary);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow-x: hidden;
+    position: relative;
+    padding: 20px;
+}
+
+/* 2. Animated Ambient Background Blobs */
+.bg-glow {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    z-index: 0;
+    opacity: 0.6;
+    animation: float 10s infinite alternate ease-in-out;
+}
+
+.blob-1 {
+    width: 350px;
+    height: 350px;
+    background: #c084fc;
+    top: 10%;
+    left: 15%;
+}
+
+.blob-2 {
+    width: 400px;
+    height: 400px;
+    background: #818cf8;
+    bottom: 10%;
+    right: 15%;
+    animation-delay: -3s;
+}
+
+.blob-3 {
+    width: 250px;
+    height: 250px;
+    background: #f472b6;
+    top: 45%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    animation-delay: -6s;
+}
+
+@keyframes float {
+    0% {
+        transform: translate(0, 0) scale(1);
+    }
+    100% {
+        transform: translate(30px, -40px) scale(1.1);
+    }
+}
+
+/* 3. Main Container & Utility Classes */
+.app-container {
+    width: 100%;
+    max-width: 540px;
+    z-index: 1;
+    position: relative;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.fade-in {
+    animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(14px) scale(0.98);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.card {
+    background: var(--card-bg);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--card-border);
+    border-radius: var(--radius-xl);
+    padding: 44px 32px;
+    box-shadow: var(--shadow-soft);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card-content {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+/* 4. Top Tag & Progress Bar */
+.badge-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 18px;
+    background: rgba(99, 102, 241, 0.08);
+    border: 1px solid rgba(99, 102, 241, 0.2);
+    border-radius: var(--radius-full);
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--text-accent);
+    margin-bottom: 20px;
+    letter-spacing: -0.2px;
+}
+
+.progress-container {
+    width: 100%;
+    height: 8px;
+    background: rgba(226, 232, 240, 0.8);
+    border-radius: var(--radius-full);
+    overflow: hidden;
+    margin-bottom: 28px;
+}
+
+.progress-bar {
+    height: 100%;
+    width: 12.5%;
+    background: var(--primary-gradient);
+    border-radius: var(--radius-full);
+    transition: width 0.4s ease;
+}
+
+/* 5. Start Card Typography */
+.main-title {
+    font-family: var(--font-heading);
+    font-size: 2.5rem;
+    font-weight: 800;
+    line-height: 1.25;
+    margin-bottom: 16px;
+    letter-spacing: -0.8px;
+    background: var(--primary-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    word-break: keep-all;
+}
+
+.description {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: var(--text-secondary);
+    font-weight: 400;
+    margin-bottom: 36px;
+    max-width: 380px;
+    word-break: keep-all;
+}
+
+/* 6. Question Screen Elements */
+.question-header {
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 16px;
+}
+
+.q-number {
+    font-family: var(--font-heading);
+    font-size: 1.75rem;
+    font-weight: 800;
+    color: var(--text-accent);
+}
+
+.q-step {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+}
+
+.question-text {
+    font-size: 1.35rem;
+    font-weight: 700;
+    line-height: 1.45;
+    color: var(--text-primary);
+    margin-bottom: 32px;
+    min-height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    word-break: keep-all;
+}
+
+/* 7. Options Buttons */
+.options-container {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    width: 100%;
+}
+
+.option-btn {
+    width: 100%;
+    padding: 18px 22px;
+    background: var(--option-gradient);
+    border: 1.5px solid rgba(203, 213, 225, 0.8);
+    border-radius: var(--radius-lg);
+    color: var(--text-primary);
+    font-family: var(--font-main);
+    font-size: 1.05rem;
+    font-weight: 600;
+    line-height: 1.4;
+    text-align: center;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+    transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+    word-break: keep-all;
+}
+
+.option-btn:hover {
+    background: #ffffff;
+    border-color: var(--option-active-border);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 24px -4px rgba(99, 102, 241, 0.2);
+    color: var(--text-accent);
+}
+
+.option-btn:active {
+    transform: scale(0.98);
+}
+
+/* 8. Result Screen Elements with Generated 3D Character */
+.result-char-container {
+    margin-bottom: 16px;
+    position: relative;
+}
+
+.result-char-img {
+    width: 180px;
+    height: 180px;
+    border-radius: 24px;
+    object-fit: cover;
+    box-shadow: 0 16px 36px -8px rgba(168, 85, 247, 0.35), 0 0 0 4px rgba(255, 255, 255, 0.9);
+    border: 2px solid rgba(168, 85, 247, 0.25);
+    transition: transform 0.3s ease;
+}
+
+.pulse-anim {
+    animation: charBounce 3s infinite ease-in-out;
+}
+
+@keyframes charBounce {
+    0%, 100% {
+        transform: scale(1) translateY(0);
+    }
+    50% {
+        transform: scale(1.04) translateY(-8px);
+        box-shadow: 0 24px 44px -6px rgba(168, 85, 247, 0.45), 0 0 0 4px rgba(255, 255, 255, 1);
+    }
+}
+
+.result-sub-text {
+    font-size: 1.15rem;
+    color: var(--text-secondary);
+    font-weight: 600;
+    margin-bottom: 8px;
+    letter-spacing: -0.3px;
+}
+
+.highlight-mbti {
+    font-family: var(--font-heading);
+    font-size: 1.45rem;
+    font-weight: 900;
+    color: var(--text-accent);
+    background: var(--primary-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: inline-block;
+    padding: 0 4px;
+}
+
+.result-nickname {
+    font-size: 2.1rem;
+    font-weight: 800;
+    letter-spacing: -0.6px;
+    color: var(--text-primary);
+    margin-bottom: 10px;
+    word-break: keep-all;
+}
+
+.result-one-line {
+    font-size: 1.05rem;
+    line-height: 1.55;
+    color: #475569;
+    font-weight: 500;
+    margin-bottom: 24px;
+    padding: 0 10px;
+    word-break: keep-all;
+}
+
+.humor-quote-box {
+    width: 100%;
+    background: linear-gradient(135deg, rgba(248, 250, 252, 0.95) 0%, rgba(241, 245, 249, 0.95) 100%);
+    border: 1.5px dashed rgba(168, 85, 247, 0.35);
+    border-radius: var(--radius-lg);
+    padding: 20px 18px;
+    margin-bottom: 28px;
+    text-align: left;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.02);
+    position: relative;
+    transition: transform 0.3s ease;
+}
+
+.humor-quote-box:hover {
+    transform: translateY(-2px);
+    border-color: rgba(99, 102, 241, 0.5);
+}
+
+.humor-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+
+.humor-icon {
+    font-size: 1.2rem;
+}
+
+.humor-title {
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: var(--text-accent);
+    text-uppercase: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.humor-text {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #334155;
+    font-weight: 500;
+    word-break: keep-all;
+}
+
+/* 9. Big CTA Action Buttons */
+.action-area {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.start-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    max-width: 320px;
+    padding: 18px 36px;
+    background: var(--primary-gradient);
+    color: #ffffff;
+    font-family: var(--font-main);
+    font-size: 1.15rem;
+    font-weight: 700;
+    border: none;
+    border-radius: var(--radius-full);
+    cursor: pointer;
+    box-shadow: 0 12px 28px -6px rgba(99, 102, 241, 0.45);
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.start-btn:hover {
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 18px 36px -6px rgba(168, 85, 247, 0.55);
+    background: var(--primary-hover-gradient);
+}
+
+.start-btn:active {
+    transform: translateY(1px) scale(0.98);
+    box-shadow: 0 6px 16px -4px rgba(99, 102, 241, 0.4);
+}
+
+.refresh-icon {
+    width: 22px;
+    height: 22px;
+    transition: transform 0.4s ease;
+}
+
+.start-btn:hover .refresh-icon {
+    transform: rotate(180deg);
+}
+
+.arrow-icon {
+    width: 22px;
+    height: 22px;
+    transition: transform 0.3s ease;
+}
+
+.start-btn:hover .arrow-icon {
+    transform: translateX(5px);
+}
+
+/* 10. Decorative Floating MBTI Badges */
+.floating-badge {
+    position: absolute;
+    padding: 6px 14px;
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid rgba(226, 232, 240, 0.8);
+    border-radius: var(--radius-full);
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #475569;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.04);
+    z-index: 1;
+    animation: subtleFloat 6s ease-in-out infinite alternate;
+    pointer-events: none;
+}
+
+.badge-1 {
+    top: 24px;
+    left: 20px;
+    transform: rotate(-8deg);
+    animation-delay: 0s;
+}
+
+.badge-2 {
+    top: 40px;
+    right: 24px;
+    transform: rotate(6deg);
+    animation-delay: -1.5s;
+}
+
+.badge-3 {
+    bottom: 30px;
+    left: 24px;
+    transform: rotate(5deg);
+    animation-delay: -3s;
+}
+
+.badge-4 {
+    bottom: 24px;
+    right: 20px;
+    transform: rotate(-6deg);
+    animation-delay: -4.5s;
+}
+
+@keyframes subtleFloat {
+    0% {
+        transform: translateY(0) rotate(var(--rot, 0deg));
+    }
+    100% {
+        transform: translateY(-8px) rotate(var(--rot, 0deg));
+    }
+}
+
+/* 11. Mobile Responsiveness */
+@media (max-width: 480px) {
+    .card {
+        padding: 36px 20px;
+        border-radius: 24px;
+    }
+
+    .result-char-img {
+        width: 140px;
+        height: 140px;
+    }
+
+    .main-title {
+        font-size: 2rem;
+    }
+
+    .question-text {
+        font-size: 1.22rem;
+    }
+
+    .result-nickname {
+        font-size: 1.75rem;
+    }
+
+    .result-sub-text {
+        font-size: 1.05rem;
+    }
+
+    .humor-text {
+        font-size: 0.96rem;
+    }
+
+    .option-btn {
+        padding: 16px 20px;
+        font-size: 0.98rem;
+    }
+
+    .start-btn {
+        padding: 16px 28px;
+        font-size: 1.1rem;
+    }
+
+    .floating-badge {
+        display: none;
+    }
+}

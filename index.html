@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>나의 진짜 성격은? | MBTI 성격 유형 테스트</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Outfit:wght@500;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <!-- Background Animated Glows -->
+    <div class="bg-glow blob-1"></div>
+    <div class="bg-glow blob-2"></div>
+    <div class="bg-glow blob-3"></div>
+
+    <div class="app-container">
+        <!-- 1. Start Screen Card -->
+        <main class="card start-card" id="start-screen">
+            <!-- Decorative Floating Badges -->
+            <div class="floating-badge badge-1">#ENFP 💡</div>
+            <div class="floating-badge badge-2">#INTJ 🧠</div>
+            <div class="floating-badge badge-3">#ESFJ 🤝</div>
+            <div class="floating-badge badge-4">#INFP 🎨</div>
+
+            <div class="card-content">
+                <div class="badge-tag">
+                    <span class="sparkle">✨</span> 3분 소요 · 8문항 (무작위 셔플)
+                </div>
+                
+                <h1 class="main-title">나의 진짜 성격은?</h1>
+                
+                <p class="description">매번 새로운 무작위 질문으로 알아보는 나의 MBTI 유형</p>
+                
+                <div class="action-area">
+                    <button type="button" id="start-btn" class="start-btn" onclick="startTest()">
+                        <span>테스트 시작하기</span>
+                        <svg class="arrow-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                            <polyline points="12 5 19 12 12 19"></polyline>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </main>
+
+        <!-- 2. Question Screen Card -->
+        <main class="card question-card hidden" id="question-screen">
+            <!-- Progress Bar -->
+            <div class="progress-container">
+                <div class="progress-bar" id="progress-bar"></div>
+            </div>
+
+            <div class="card-content">
+                <div class="question-header">
+                    <span class="q-number" id="question-number">Q1.</span>
+                    <span class="q-step" id="question-step">1 / 8</span>
+                </div>
+
+                <h2 class="question-text" id="question-text">질문 내용이 여기에 표시됩니다.</h2>
+
+                <div class="options-container">
+                    <button type="button" class="option-btn" id="option-a" onclick="selectOption('A')">
+                        <span class="opt-text" id="option-a-text">선택지 A</span>
+                    </button>
+                    <button type="button" class="option-btn" id="option-b" onclick="selectOption('B')">
+                        <span class="opt-text" id="option-b-text">선택지 B</span>
+                    </button>
+                </div>
+            </div>
+        </main>
+
+        <!-- 3. Result Screen Card -->
+        <main class="card result-card hidden" id="result-screen">
+            <div class="card-content">
+                <div class="badge-tag">
+                    <span class="sparkle">🎉</span> 분석 완료
+                </div>
+
+                <!-- Generated 3D Cute Character Image -->
+                <div class="result-char-container">
+                    <img id="result-char-img" class="result-char-img pulse-anim" src="" alt="MBTI 캐릭터">
+                </div>
+
+                <!-- Main Result Title Header -->
+                <p class="result-sub-text">당신의 유형은 <strong id="result-mbti-type" class="highlight-mbti">ENFP</strong> 입니다</p>
+                
+                <!-- MBTI Nickname -->
+                <h2 class="result-nickname" id="result-nickname">재기발랄한 활동가</h2>
+
+                <!-- One Line Description -->
+                <p class="result-one-line" id="result-one-line">"머릿속은 아이디어 천국, 몸은 행동파인 열정 만렙 자유로운 영혼!"</p>
+
+                <!-- Humorous Situation Quote Box -->
+                <div class="humor-quote-box">
+                    <div class="humor-header">
+                        <span class="humor-icon">💬</span>
+                        <span class="humor-title">이 유형의 찰떡 모먼트</span>
+                    </div>
+                    <p class="humor-text" id="result-humor-quote">
+                        친구가 "나 우울해서 쇼핑했어" ➔ "뭐 샀어?! 대박 나도 사고 싶다! 쇼핑몰 주소 공유해줘!! 🛍️"
+                    </p>
+                </div>
+
+                <!-- Action Button -->
+                <div class="action-area">
+                    <button type="button" id="restart-btn" class="start-btn restart-btn" onclick="restartTest()">
+                        <svg class="refresh-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="23 4 23 10 17 10"></polyline>
+                            <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
+                        </svg>
+                        <span>테스트 다시하기</span>
+                    </button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+
+</html>
