@@ -17,171 +17,263 @@
   <div class="bg-shape shape-3"></div>
 
   <div class="app-container">
-    <!-- Header -->
-    <header class="app-header">
-      <div class="header-badge">
-        <i class="fa-solid fa-heart-pulse"></i> AI 마음 케어
+    <!-- ========================================================================== -->
+    <!-- 1. 로그인 / 회원가입 화면 (#auth-container) -->
+    <!-- ========================================================================== -->
+    <div id="auth-container" class="auth-card-container">
+      <div class="auth-header">
+        <div class="auth-badge">
+          <i class="fa-solid fa-heart-pulse"></i> AI 마음 케어
+        </div>
+        <h1 class="auth-title">AI 감정 일기</h1>
+        <p class="auth-subtitle">당신의 마음에 귀 기울이는 따뜻한 심리 상담 공간</p>
       </div>
-      <!-- ① '오늘의 하루는 어땠나요?'라는 제목 -->
-      <h1 class="main-title">오늘의 하루는 어땠나요?</h1>
-      <p class="subtitle" id="current-date">따뜻한 AI가 당신의 마음에 귀 기울이고 있어요.</p>
-    </header>
 
-    <!-- Main Card -->
-    <main class="main-card">
-      <!-- Quick emotion suggestion chips -->
-      <div class="preset-section">
-        <span class="preset-label"><i class="fa-solid fa-wand-magic-sparkles"></i> 이런 이야기를 적어보세요</span>
-        <div class="preset-chips">
-          <button class="chip-btn" data-text="오늘 회사에서 과장이 말을 심하게 해서 종일 스트레스를 받았어. 퇴근하고 힘이 다 빠져서 우울하다.">
-            😔 직장/학업 스트레스
+      <form id="auth-form" class="auth-form" onsubmit="return false;">
+        <!-- Alert / Status message box -->
+        <div id="auth-message" class="auth-message hidden"></div>
+
+        <!-- 이메일 입력창 -->
+        <div class="input-field-group">
+          <label for="auth-email" class="input-field-label">
+            <i class="fa-regular fa-envelope"></i> 이메일
+          </label>
+          <input 
+            type="email" 
+            id="auth-email" 
+            class="auth-input" 
+            placeholder="이메일 주소를 입력하세요 (예: user@example.com)" 
+            autocomplete="email" 
+            required 
+          />
+        </div>
+
+        <!-- 비밀번호 입력창 -->
+        <div class="input-field-group">
+          <label for="auth-password" class="input-field-label">
+            <i class="fa-solid fa-lock"></i> 비밀번호
+          </label>
+          <input 
+            type="password" 
+            id="auth-password" 
+            class="auth-input" 
+            placeholder="비밀번호를 입력하세요 (6자리 이상)" 
+            autocomplete="current-password" 
+            required 
+          />
+        </div>
+
+        <!-- 로그인 / 회원가입 버튼 -->
+        <div class="auth-button-group">
+          <button type="submit" id="btn-login" class="btn btn-primary btn-auth">
+            <i class="fa-solid fa-right-to-bracket"></i>
+            <span>로그인</span>
           </button>
-          <button class="chip-btn" data-text="오늘 정말 원하던 프로젝트 합격 소식을 들었어! 오랫동안 준비했는데 너무 기쁘고 뿌듯하다!">
-            🎉 기쁜 성취와 행복
-          </button>
-          <button class="chip-btn" data-text="이유 없이 마음이 조급하고 불안해. 앞으로의 미래가 걱정되고 아무것도 손에 안 잡혀.">
-            😰 답답함과 불안
-          </button>
-          <button class="chip-btn" data-text="저녁에 친구랑 맛있는 음식을 먹으면서 오랫동안 수다를 떨었어. 소소하지만 평화로운 하루였어.">
-            ☕ 소소한 일상과 평온
+          <button type="button" id="btn-signup" class="btn btn-secondary btn-auth">
+            <i class="fa-solid fa-user-plus"></i>
+            <span>회원가입</span>
           </button>
         </div>
+
+        <!-- 구분선 (또는) -->
+        <div class="auth-divider">
+          <span>또는</span>
+        </div>
+
+        <!-- Google로 로그인 버튼 -->
+        <button type="button" id="btn-google-login" class="btn btn-google">
+          <svg class="google-icon" viewBox="0 0 24 24" width="20" height="20">
+            <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+            <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+            <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
+            <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
+          </svg>
+          <span>Google로 로그인</span>
+        </button>
+      </form>
+    </div>
+
+    <!-- ========================================================================== -->
+    <!-- 2. 기존 일기장 화면 (#diary-app-container) - 로그인 후 표시 -->
+    <!-- ========================================================================== -->
+    <div id="diary-app-container" class="diary-app-container hidden">
+      <!-- User Profile Header Bar -->
+      <div class="user-header-bar">
+        <div class="user-info">
+          <i class="fa-solid fa-circle-user user-avatar-icon"></i>
+          <span id="user-email-display" class="user-email-text">user@example.com</span>
+        </div>
+        <button id="btn-logout" class="btn-logout-sm">
+          <i class="fa-solid fa-right-from-bracket"></i> 로그아웃
+        </button>
       </div>
 
-      <!-- Input Area Container -->
-      <div class="input-wrapper">
-        <div class="input-header-bar">
-          <span class="input-label"><i class="fa-regular fa-pen-to-square"></i> 감정 일기 작성하기</span>
-          <div class="input-actions">
-            <button id="btn-clear" class="text-action-btn" title="내용 지우기">
-              <i class="fa-solid fa-rotate-left"></i> 지우기
+      <!-- Header -->
+      <header class="app-header">
+        <div class="header-badge">
+          <i class="fa-solid fa-heart-pulse"></i> AI 마음 케어
+        </div>
+        <!-- ① '오늘의 하루는 어땠나요?'라는 제목 -->
+        <h1 class="main-title">오늘의 하루는 어땠나요?</h1>
+        <p class="subtitle" id="current-date">따뜻한 AI가 당신의 마음에 귀 기울이고 있어요.</p>
+      </header>
+
+      <!-- Main Card -->
+      <main class="main-card">
+        <!-- Quick emotion suggestion chips -->
+        <div class="preset-section">
+          <span class="preset-label"><i class="fa-solid fa-wand-magic-sparkles"></i> 이런 이야기를 적어보세요</span>
+          <div class="preset-chips">
+            <button class="chip-btn" data-text="오늘 회사에서 과장이 말을 심하게 해서 종일 스트레스를 받았어. 퇴근하고 힘이 다 빠져서 우울하다.">
+              😔 직장/학업 스트레스
+            </button>
+            <button class="chip-btn" data-text="오늘 정말 원하던 프로젝트 합격 소식을 들었어! 오랫동안 준비했는데 너무 기쁘고 뿌듯하다!">
+              🎉 기쁜 성취와 행복
+            </button>
+            <button class="chip-btn" data-text="이유 없이 마음이 조급하고 불안해. 앞으로의 미래가 걱정되고 아무것도 손에 안 잡혀.">
+              😰 답답함과 불안
+            </button>
+            <button class="chip-btn" data-text="저녁에 친구랑 맛있는 음식을 먹으면서 오랫동안 수다를 떨었어. 소소하지만 평화로운 하루였어.">
+              ☕ 소소한 일상과 평온
             </button>
           </div>
         </div>
 
-        <!-- ② 사용자가 여러 줄의 텍스트를 입력할 수 있는 넓은 입력창(textarea) -->
-        <textarea id="diary-input" rows="7"
-          placeholder="오늘 있었던 일, 느꼈던 감정, 누구에게도 하지 못했던 이야기를 편하게 적어보세요... (예: 오늘 있었던 일이나 든 생각을 자유롭게 적어보세요)"></textarea>
+        <!-- Input Area Container -->
+        <div class="input-wrapper">
+          <div class="input-header-bar">
+            <span class="input-label"><i class="fa-regular fa-pen-to-square"></i> 감정 일기 작성하기</span>
+            <div class="input-actions">
+              <button id="btn-clear" class="text-action-btn" title="내용 지우기">
+                <i class="fa-solid fa-rotate-left"></i> 지우기
+              </button>
+            </div>
+          </div>
 
-        <div class="input-footer-bar">
-          <!-- Live character counter -->
-          <span class="char-counter" id="char-counter">0 / 1,000자</span>
+          <!-- ② 사용자가 여러 줄의 텍스트를 입력할 수 있는 넓은 입력창(textarea) -->
+          <textarea id="diary-input" rows="7"
+            placeholder="오늘 있었던 일, 느꼈던 감정, 누구에게도 하지 못했던 이야기를 편하게 적어보세요... (예: 오늘 있었던 일이나 든 생각을 자유롭게 적어보세요)"></textarea>
 
-          <!-- Voice recording animation indicator -->
-          <div id="voice-indicator" class="voice-indicator hidden">
-            <span class="pulse-ring"></span>
-            <span class="listening-text"><i class="fa-solid fa-microphone"></i> 음성을 듣고 있습니다...</span>
-            <div class="waveform">
-              <span class="bar"></span>
-              <span class="bar"></span>
-              <span class="bar"></span>
-              <span class="bar"></span>
+          <div class="input-footer-bar">
+            <!-- Live character counter -->
+            <span class="char-counter" id="char-counter">0 / 1,000자</span>
+
+            <!-- Voice recording animation indicator -->
+            <div id="voice-indicator" class="voice-indicator hidden">
+              <span class="pulse-ring"></span>
+              <span class="listening-text"><i class="fa-solid fa-microphone"></i> 음성을 듣고 있습니다...</span>
+              <div class="waveform">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+              </div>
             </div>
           </div>
         </div>
-      </div>
 
-      <!-- ③ 입력창 아래 '음성으로 입력하기' 버튼과 '분석 요청하기' 버튼 -->
-      <div class="button-group">
-        <button id="btn-voice" class="btn btn-secondary">
-          <i class="fa-solid fa-microphone"></i>
-          <span>음성으로 입력하기</span>
-        </button>
-
-        <button id="btn-analyze" class="btn btn-primary">
-          <i class="fa-solid fa-sparkles"></i>
-          <span>분석 요청하기</span>
-        </button>
-      </div>
-
-      <!-- History toggle & quick utilities bar -->
-      <div class="utility-bar">
-        <button id="btn-history-toggle" class="utility-btn">
-          <i class="fa-solid fa-clock-rotate-left"></i> 저장된 일기 목록 보기 (<span id="history-count">0</span>)
-        </button>
-      </div>
-
-      <!-- History List Container (Collapsible) -->
-      <div id="history-section" class="history-section hidden">
-        <h3 class="history-title"><i class="fa-solid fa-bookmark"></i> 지나간 마음 일기</h3>
-        <div id="history-list" class="history-list">
-          <!-- Dynamic history items insert here -->
-        </div>
-      </div>
-    </main>
-
-    <!-- Output Section -->
-    <!-- ④ 가장 아래에는 'AI의 답변'이라는 소제목과 함께, AI의 답변이 표시될 회색 배경의 박스 -->
-    <section class="response-section">
-      <div class="response-header">
-        <h2 class="response-title">
-          <i class="fa-solid fa-robot"></i> AI의 답변
-        </h2>
-        <div class="response-controls" id="response-controls" style="display: none;">
-          <button id="btn-tts" class="control-btn" title="음성으로 듣기">
-            <i class="fa-solid fa-volume-high"></i> 음성 듣기
+        <!-- ③ 입력창 아래 '음성으로 입력하기' 버튼과 '분석 요청하기' 버튼 -->
+        <div class="button-group">
+          <button id="btn-voice" class="btn btn-secondary">
+            <i class="fa-solid fa-microphone"></i>
+            <span>음성으로 입력하기</span>
           </button>
-          <button id="btn-copy" class="control-btn" title="답변 복사하기">
-            <i class="fa-regular fa-copy"></i> 복사
+
+          <button id="btn-analyze" class="btn btn-primary">
+            <i class="fa-solid fa-sparkles"></i>
+            <span>분석 요청하기</span>
           </button>
         </div>
-      </div>
 
-      <!-- 회색 배경의 박스 (Gray Background Box) -->
-      <div id="ai-response-box" class="gray-response-box">
-        <div id="response-placeholder" class="placeholder-content">
-          <i class="fa-regular fa-comment-dots placeholder-icon"></i>
-          <p class="placeholder-text">여기에 AI의 답변이 표시됩니다.</p>
+        <!-- History toggle & quick utilities bar -->
+        <div class="utility-bar">
+          <button id="btn-history-toggle" class="utility-btn">
+            <i class="fa-solid fa-clock-rotate-left"></i> 저장된 일기 목록 보기 (<span id="history-count">0</span>)
+          </button>
         </div>
 
-        <div id="response-loading" class="loading-content hidden">
-          <div class="sparkle-spinner">
-            <i class="fa-solid fa-brain"></i>
-          </div>
-          <p class="loading-text">AI가 당신의 감정을 들여다보고 공감과 조언을 작성하고 있어요...</p>
-        </div>
-
-        <div id="response-result" class="result-content hidden">
-          <!-- Dynamic emotion tags -->
-          <div class="emotion-tags" id="emotion-tags"></div>
-
-          <!-- Main answer text -->
-          <div class="ai-text-content" id="ai-text-content"></div>
-
-          <!-- Encouragement Quote & Action Card -->
-          <div class="advice-card" id="advice-card">
-            <div class="advice-title"><i class="fa-solid fa-lightbulb"></i> 오늘 마음 처방전</div>
-            <div class="advice-body" id="advice-body"></div>
+        <!-- History List Container (Collapsible) -->
+        <div id="history-section" class="history-section hidden">
+          <h3 class="history-title"><i class="fa-solid fa-bookmark"></i> 지나간 마음 일기</h3>
+          <div id="history-list" class="history-list">
+            <!-- Dynamic history items insert here -->
           </div>
         </div>
-      </div>
-    </section>
+      </main>
 
-    <!-- ① AI 답변 박스 아래 '나의 일기 히스토리' 섹션 -->
-    <section class="redis-history-section">
-      <div class="redis-history-header">
-        <h2 class="redis-history-title">
-          <i class="fa-solid fa-clock-rotate-left"></i> 나의 일기 히스토리
-        </h2>
-        <span class="redis-history-badge" id="redis-history-count">0개의 기록</span>
-      </div>
-
-      <!-- ②, ③ Redis에 저장된 최신순 일기 히스토리 카드 그리드 -->
-      <div id="redis-history-grid" class="redis-history-grid">
-        <div class="history-card-placeholder">
-          <i class="fa-solid fa-spinner fa-spin"></i>
-          <p>저장된 일기 히스토리를 불러오는 중입니다...</p>
+      <!-- Output Section -->
+      <!-- ④ 가장 아래에는 'AI의 답변'이라는 소제목과 함께, AI의 답변이 표시될 회색 배경의 박스 -->
+      <section class="response-section">
+        <div class="response-header">
+          <h2 class="response-title">
+            <i class="fa-solid fa-robot"></i> AI의 답변
+          </h2>
+          <div class="response-controls" id="response-controls" style="display: none;">
+            <button id="btn-tts" class="control-btn" title="음성으로 듣기">
+              <i class="fa-solid fa-volume-high"></i> 음성 듣기
+            </button>
+            <button id="btn-copy" class="control-btn" title="답변 복사하기">
+              <i class="fa-regular fa-copy"></i> 복사
+            </button>
+          </div>
         </div>
-      </div>
-    </section>
 
-    <!-- Footer -->
-    <footer class="app-footer">
-      <p>© 2026 AI 감정 일기 • 당신의 모든 날을 응원합니다 💙</p>
-    </footer>
+        <!-- 회색 배경의 박스 (Gray Background Box) -->
+        <div id="ai-response-box" class="gray-response-box">
+          <div id="response-placeholder" class="placeholder-content">
+            <i class="fa-regular fa-comment-dots placeholder-icon"></i>
+            <p class="placeholder-text">여기에 AI의 답변이 표시됩니다.</p>
+          </div>
+
+          <div id="response-loading" class="loading-content hidden">
+            <div class="sparkle-spinner">
+              <i class="fa-solid fa-brain"></i>
+            </div>
+            <p class="loading-text">AI가 당신의 감정을 들여다보고 공감과 조언을 작성하고 있어요...</p>
+          </div>
+
+          <div id="response-result" class="result-content hidden">
+            <!-- Dynamic emotion tags -->
+            <div class="emotion-tags" id="emotion-tags"></div>
+
+            <!-- Main answer text -->
+            <div class="ai-text-content" id="ai-text-content"></div>
+
+            <!-- Encouragement Quote & Action Card -->
+            <div class="advice-card" id="advice-card">
+              <div class="advice-title"><i class="fa-solid fa-lightbulb"></i> 오늘 마음 처방전</div>
+              <div class="advice-body" id="advice-body"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ① AI 답변 박스 아래 '나의 일기 히스토리' 섹션 -->
+      <section class="redis-history-section">
+        <div class="redis-history-header">
+          <h2 class="redis-history-title">
+            <i class="fa-solid fa-clock-rotate-left"></i> 나의 일기 히스토리
+          </h2>
+          <span class="redis-history-badge" id="redis-history-count">0개의 기록</span>
+        </div>
+
+        <!-- ②, ③ Redis에 저장된 최신순 일기 히스토리 카드 그리드 -->
+        <div id="redis-history-grid" class="redis-history-grid">
+          <div class="history-card-placeholder">
+            <i class="fa-solid fa-spinner fa-spin"></i>
+            <p>저장된 일기 히스토리를 불러오는 중입니다...</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Footer -->
+      <footer class="app-footer">
+        <p>© 2026 AI 감정 일기 • 당신의 모든 날을 응원합니다 💙</p>
+      </footer>
+    </div>
   </div>
 
-  <!-- Audio element for TTS or sound effects -->
+  <!-- Main JavaScript module -->
   <script type="module" src="./main.js"></script>
 </body>
 
